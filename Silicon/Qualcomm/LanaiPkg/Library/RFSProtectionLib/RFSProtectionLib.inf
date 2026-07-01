@@ -1,0 +1,26 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = RFSProtectionLib
+  FILE_GUID                      = 67B03C86-A5DF-4B24-8D3F-2AABAD55DB49
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = RFSProtectionLib|DXE_DRIVER DXE_RUNTIME_DRIVER UEFI_APPLICATION
+
+[Sources]
+  RFSProtectionLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+  SiliciumPkg/SiliciumPkg.dec
+
+[LibraryClasses]
+  DebugLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  MemoryMapHelperLib
+  BaseMemoryLib
+
+[Protocols]
+  gQcomScmProtocolGuid

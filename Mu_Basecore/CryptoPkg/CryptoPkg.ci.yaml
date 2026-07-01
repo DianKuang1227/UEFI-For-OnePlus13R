@@ -1,0 +1,105 @@
+## @file
+# CI configuration for CryptoPkg
+#
+# Copyright (c) Microsoft Corporation
+# Copyright (c) 2020 - 2022, Intel Corporation. All rights reserved.<BR>
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+##
+{
+    "PrEval": {
+        "DscPath": "CryptoPkg.dsc",
+    },
+    "LicenseCheck": {
+        # MU_CHANGE [BEGIN] Move to Shared Crypto
+        "IgnoreFiles": []
+        # MU_CHANGE [END] Move to Shared Crypto
+    },
+    "EccCheck": {
+        ## Exception sample looks like below:
+        ## "ExceptionList": [
+        ##     "<ErrorID>", "<KeyWord>"
+        ## ]
+        "ExceptionList": [
+            "8001", "IsLeap",
+            "8001", "OBJ_get0_data",
+            "8001", "OBJ_length",
+            "5005", "X509PopCertificate"
+        ],
+        ## Both file path and directory path are accepted.
+        "IgnoreFiles": [
+            # MU_CHANGE [BEGIN] Move to Shared Crypto
+            # The unit testing folder is not to be checked
+            "Test/UnitTest",
+            # MU_CHANGE [END] Move to Shared Crypto
+            "Library/BaseCryptLibMbedTls/SysCall"
+        ]
+    },
+    "CompilerPlugin": {
+        "DscPath": "CryptoPkg.dsc"
+    },
+    ## options defined .pytool/Plugin/HostUnitTestCompilerPlugin
+    "HostUnitTestCompilerPlugin": {
+        #"DscPath": "Test/CryptoPkgHostUnitTest.dsc"  # MU_CHANGE - Disable temporarily while transitioning crypto
+    },
+    "CharEncodingCheck": {
+        "IgnoreFiles": []
+    },
+    "DependencyCheck": {
+        "AcceptableDependencies": [
+            "MdePkg/MdePkg.dec",
+            "MdeModulePkg/MdeModulePkg.dec",
+            "CryptoPkg/CryptoPkg.dec",
+            "UnitTestFrameworkPkg/UnitTestFrameworkPkg.dec"
+        ],
+        # For host based unit tests
+        "AcceptableDependencies-HOST_APPLICATION":[],
+        # For UEFI shell based apps
+        "AcceptableDependencies-UEFI_APPLICATION":[],
+        "IgnoreInf": []
+    },
+    "DscCompleteCheck": {
+        "DscPath": "CryptoPkg.dsc",
+        "IgnoreInf": [
+            ## MU_CHANGE [BEGIN] Ignore Shared Crypto FIles
+            "CryptoPkg/Binaries/**"
+            ## MU_CHANGE [END]
+        ]
+    },
+    "GuidCheck": {
+        "IgnoreGuidName": [],
+        "IgnoreGuidValue": [],
+        "IgnoreFoldersAndFiles": [
+            "CryptoPkg/Binaries/onecrypto-bin_extdep/"
+        ],
+        "IgnoreDuplicates": [
+            "OneCryptoBinStandaloneMm=OneCryptoBinSupvMm"  # Intentional: Same GUID for loader identification
+        ]
+    },
+    "LibraryClassCheck": {
+        "IgnoreHeaderFile": []
+    },
+    ## MU_CHANGE [BEGIN] Disable AuditOnly
+    "MarkdownLintCheck": {
+        "AuditOnly": False,          # If True, log all errors and then mark as skipped
+        "IgnoreFiles": []            # package root relative file, folder, or glob pattern to ignore
+    },
+    ## MU_CHANGE [END] Disable AuditOnly
+
+    ## options defined ci/Plugin/SpellCheck
+    "SpellCheck": {
+        "skip": True,
+        "IgnoreFiles": [],           # use gitignore syntax to ignore errors in matching files
+        "ExtendWords": [],           # words to extend to the dictionary for this package
+        "IgnoreStandardPaths": [],   # Standard Plugin defined paths that should be ignore
+        "AdditionalIncludePaths": [] # Additional paths to spell check (wildcards supported)
+    },
+
+    # options defined in .pytool/Plugin/UncrustifyCheck
+    "UncrustifyCheck": {
+        "IgnoreFiles": [
+            # MU_CHANGE [BEGIN] Move to Shared Crypto
+            "opensslconf.h"
+            # MU_CHANGE [END] Move to Shared Crypto
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+[package]
+name = "MuTelemetryHelperLib"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "mu_telemetry_helper_lib"
+path = "src/lib.rs"
+
+[dependencies]
+mu_pi = { workspace = true }
+mu_rust_helpers = { workspace = true }
+r-efi = { workspace = true }
+patina = { workspace = true }
+
+[dev-dependencies]
+mockall = { workspace = true }
+patina = { workspace = true, features = ["mockall"] }
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(tarpaulin_include)'] }
+
+[package.metadata.cargo-machete]
+ignored = ["mockall"]

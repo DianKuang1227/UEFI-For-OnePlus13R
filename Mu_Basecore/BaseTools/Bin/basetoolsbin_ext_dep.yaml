@@ -1,0 +1,23 @@
+##
+# Download the compiled basetools from the github release
+# - Release package contains different binaries based on the host os
+# Set this downloaded folder on path
+# Set a Shell variable to this path
+#
+# Copyright (c) 2019, Microsoft Corporation
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+##
+scope: global
+id: edk-tools-bin
+type: web
+name: Mu-Basetools
+source: https://github.com/microsoft/mu_basecore/releases/download/v2025110002.0.4/basetools-v2025110002.0.4.tar.gz
+version: v2025110002.0.4
+sha256: 732bb5274b655570555c1e1cad440662548860fdb58330a8eb82b14db23ff3c3
+internal_path: /basetools/
+compression_type: tar
+flags:
+  - set_shell_var
+  - set_path
+  - host_specific
+var_name: EDK_TOOLS_BIN
